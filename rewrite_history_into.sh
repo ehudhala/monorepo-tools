@@ -19,4 +19,5 @@ SUBDIRECTORY_SED=${SUBDIRECTORY//-/\\-} TAB=$'\t' git filter-branch \
     --index-filter '
     git ls-files -s | sed "s-$TAB\"*-&$SUBDIRECTORY_SED/-" | GIT_INDEX_FILE=$GIT_INDEX_FILE.new git update-index --index-info && if [ -f "$GIT_INDEX_FILE.new" ]; then mv "$GIT_INDEX_FILE.new" "$GIT_INDEX_FILE"; fi' \
     --tag-name-filter 'cat' \
+    --msg-filter 'sed "s/^/$SUBDIRECTORY_SED: /"' \
     -- $REV_LIST_PARAMS
